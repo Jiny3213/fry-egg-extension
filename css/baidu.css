@@ -1,0 +1,17 @@
+.fe-btn {
+  text-align: center;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+.fe-btn--index {
+  margin-left: -104px;
+  position: relative;
+  left: 120px;
+}
+
+.fe-btn--normal {
+  height: 34px;
+  line-height: 34px;
+  margin-left: 20px;
+}

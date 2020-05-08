@@ -1,0 +1,46 @@
+{
+  "name": "煎蛋搜索助手",
+  "description" : "帮助你更好地使用搜索引擎的小工具",
+  "version": "0.1",
+  "manifest_version": 2,
+  "browser_action": {
+    "default_popup": "index.html",
+    "default_icon": "img/logo.png"
+  },
+  "icons":
+  {
+    "16": "img/logo.png",
+    "48": "img/logo.png",
+    "128": "img/logo.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.baidu.com/*", "http://www.baidu.com/*"],
+      "js": ["js/baidu.js"],
+      "css": ["css/baidu.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.google.com/*", "http://www.google.com/*"],
+      "js": ["js/google.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "scripts": ["js/background.js"],
+    "persistent": false
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "homepage_url": "https://www.jinyuu.cn",
+  "options_page": "options/options.html",
+  "options_ui": {
+    "page": "options/options.html",
+    "chrome_style": true
+  },
+  "web_accessible_resources": ["js/inject.js"]
+}
