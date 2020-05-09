@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
+  // 在其他百度页面中不做任何事情
+  if(location.pathname !== '/' && location.pathname !== '/s') return
+
   let hasInput = false
   let kw = document.getElementById('kw')
   let form = document.getElementById('form')
@@ -40,7 +43,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // 添加到dom中
   form.appendChild(button)
+  // 去除广告
+  removeAd()
 });
-window.onload = function () {
 
+// 去除第二页开始的底部广告
+function removeAd() {
+  let ads = document.getElementsByClassName('ec_tuiguang_pplink')
+  if(ads.length) {
+    for(let ad of ads) {
+      ad.parentNode.parentNode.style.display = 'none'
+    }
+  }
 }
+
+// xhr结束消息
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  if(request.cmd === 'xhrCompleted') {
+    removeAd()
+  }
+  sendResponse()
+});

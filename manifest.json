@@ -28,11 +28,14 @@
   ],
   "background": {
     "scripts": ["js/background.js"],
-    "persistent": false
+    "persistent": true
   },
   "permissions": [
     "storage",
     "activeTab",
+    "webRequest",
+    "webRequestBlocking",
+    "*://*.baidu.com/",
     "http://*/*",
     "https://*/*"
   ],

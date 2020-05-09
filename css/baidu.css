@@ -15,3 +15,22 @@
   line-height: 34px;
   margin-left: 20px;
 }
+
+/*屏蔽广告*/
+#content_left>:not([class^=result]) {
+  height: 0;
+  overflow: hidden;
+  margin: 0;
+}
+
+/*屏蔽第二页开始底部的广告*/
+#1 {
+  display: none!important;
+}
+
+/*屏蔽右侧栏*/
+#content_right {
+  display: none;
+}
+
+
