@@ -1,0 +1,8 @@
+/*百度iframe广告*/
+iframe[src*="baidu"] {
+  display: none;
+}
+/*csdn谷歌iframe广告*/
+iframe[src*="googlesyndication"] {
+  display: none;
+}

@@ -21,6 +21,11 @@
       "run_at": "document_start"
     },
     {
+      "matches": ["<all_urls>"],
+      "css": ["module/kill-common-ad/index.css"],
+      "run_at": "document_start"
+    },
+    {
       "matches": ["https://www.google.com/*", "http://www.google.com/*"],
       "js": ["js/google.js"],
       "run_at": "document_start"

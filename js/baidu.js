@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
   // 在其他百度页面中不做任何事情
   if(location.pathname !== '/' && location.pathname !== '/s') return
 
@@ -19,11 +19,20 @@ document.addEventListener('DOMContentLoaded', function() {
     button.setAttribute('class', 'fe-btn fe-btn--normal bg s_btn')
     form.appendChild(button)
   }
+  let engine = await new Promise((resolve, reject) => {
+    chrome.storage.sync.get('engine', data => {
+      resolve(data.engine)
+    })
+  })
 
-
-  button.innerText = 'google 一下'
+  let searchUrl = await new Promise((resolve, reject) => {
+    chrome.storage.sync.get('searchUrl', data => {
+      resolve(data.searchUrl)
+    })
+  })
+  button.innerText = `${engine} 一下`
   button.onclick = function () {
-    window.open(`https://www.google.com/search?q=${kw.value}`, '_blank')
+    window.open(`${searchUrl}${kw.value}`, '_blank')
   }
 
   // 原生交互体验

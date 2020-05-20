@@ -1,9 +1,9 @@
 console.log('background')
-chrome.runtime.onInstalled.addListener(function() {
-  chrome.storage.sync.set({color: '#3aa757'}, function() {
-    console.log("The color is green.");
-  });
-});
+// chrome.runtime.onInstalled.addListener(function() {
+//   chrome.storage.sync.set({color: '#3aa757'}, function() {
+//     console.log("The color is green.");
+//   });
+// });
 
 // 必须打开"persistent": true
 // 当百度页面xhr完成后, 检查是否需要去除广告

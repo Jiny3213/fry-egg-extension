@@ -1,17 +1,48 @@
-// 中文参考文章 https://www.cnblogs.com/liuxianan/p/chrome-plugin-develop.html
-// 英文官方文档 https://developer.chrome.com/extensions
+(async function() {
+  // 定义搜索引擎
+  const searchEngine = [
+    {name: 'google', searchUrl: 'https://www.google.com/search?q='},
+    {name: 'bing', searchUrl: 'https://cn.bing.com/search?q='},
+    {name: 'bili', searchUrl: 'https://search.bilibili.com/all?keyword='}
+  ]
 
-let changeColor = document.getElementById('changeColor');
-chrome.storage.sync.get('color', function(data) {
-  changeColor.style.backgroundColor = data.color;
-  changeColor.setAttribute('value', data.color);
-});
-// 改变当前页面背景色
-changeColor.onclick = function(element) {
-  let color = element.target.value;
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    chrome.tabs.executeScript(
-      tabs[0].id,
-      {code: 'document.body.style.backgroundColor = "' + color + '";'});
-  });
-};
+  const currentEngine = await new Promise(resolve => {
+      chrome.storage.sync.get('engine', data => {
+        console.log(data.engine)
+        resolve(data.engine)
+      })
+    })
+
+// 创建元素并添加到dom中
+  const main = document.getElementById('main')
+  const btns = searchEngine.map(engine => {
+    let btn = document.createElement('button')
+    btn.innerText = engine.name
+    if(engine.name === currentEngine) {
+      btn.style.background = 'red'
+    }
+    btn.onclick = () => {
+      chrome.storage.sync.set({engine: engine.name, searchUrl: engine.searchUrl}, () => {
+        clearBgColor(btns)
+        btn.style.background = 'red'
+      })
+    }
+    return btn
+  })
+
+  for(let btn of btns) {
+    main.appendChild(btn)
+  }
+
+
+  function clearBgColor(element) {
+    if(element.length) {
+      for(let el of element) {
+        el.style.background = 'none'
+      }
+    } else {
+      element.style.background = 'none'
+    }
+  }
+})()
+
