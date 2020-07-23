@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   })
   button.text(`${engine} 一下`)
   button.on('click', () => {
-    window.open(`${searchUrl}${kw.value}`, '_blank')
+    window.open(`${searchUrl}${kw.val()}`, '_blank')
   })
 
   // 去除广告
