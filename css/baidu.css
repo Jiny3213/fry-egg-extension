@@ -1,19 +1,22 @@
-.fe-btn {
-  text-align: center;
-  display: inline-block;
-  box-sizing: border-box;
-}
-
-.fe-btn--index {
-  margin-left: -104px;
-  position: relative;
-  left: 120px;
-}
-
-.fe-btn--normal {
-  height: 34px;
-  line-height: 34px;
+/* fe mean fire-egg */
+#fe-btn {
+  cursor: pointer;
+  width: 112px;
+  height: 40px;
+  line-height: 41px;
+  line-height: 40px\9;
+  background-color: #4e6ef2;
+  border-radius: 10px;
+  font-size: 17px;
+  box-shadow: none;
+  font-weight: 400;
+  border: 0;
+  outline: 0;
+  letter-spacing: normal;
   margin-left: 20px;
+}
+#fe-btn:hover {
+  background: #4662D9
 }
 
 /*屏蔽广告*/

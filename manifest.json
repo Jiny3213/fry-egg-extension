@@ -16,7 +16,7 @@
   "content_scripts": [
     {
       "matches": ["https://www.baidu.com/*", "http://www.baidu.com/*"],
-      "js": ["js/baidu.js"],
+      "js": ["utils/jquery-3.5.1.slim.min.js", "js/baidu.js"],
       "css": ["css/baidu.css"],
       "run_at": "document_start"
     },

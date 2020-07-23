@@ -2,46 +2,35 @@ document.addEventListener('DOMContentLoaded', async function() {
   // 在其他百度页面中不做任何事情
   if(location.pathname !== '/' && location.pathname !== '/s') return
 
-  let hasInput = false
-  let kw = document.getElementById('kw')
-  let form = document.getElementById('form')
-  let button = document.createElement('div')
+  let kw = $('#kw')
+  const button = $('<button class="bg s_btn" id="fe-btn"></button>')
 
   if(location.pathname === '/') {
-    // 在百度首页输入任意内容时, 页面样式会发生改变
-    kw.oninput = function() {
-      hasInput = true
-      button.setAttribute('class', 'fe-btn fe-btn--normal bg s_btn')
-      form.appendChild(button)
-      kw.oninput = null
-    }
+    // 在百度首页输入任意内容时, 页面样式会发生改变, 此时生成搜索按钮
+    kw.on('input', () => {
+      $('.bg.s_btn_wr').after(button);
+      kw.off('input')
+    })
   } else if(location.pathname === '/s') {
-    button.setAttribute('class', 'fe-btn fe-btn--normal bg s_btn')
-    form.appendChild(button)
+    $('.bg.s_btn_wr').after(button);
   }
+
+  // 获取当前的搜索引擎
   let engine = await new Promise((resolve, reject) => {
     chrome.storage.sync.get('engine', data => {
       resolve(data.engine)
     })
   })
-
+  // 获取搜索链接
   let searchUrl = await new Promise((resolve, reject) => {
     chrome.storage.sync.get('searchUrl', data => {
       resolve(data.searchUrl)
     })
   })
-  button.innerText = `${engine} 一下`
-  button.onclick = function () {
+  button.text(`${engine} 一下`)
+  button.on('click', () => {
     window.open(`${searchUrl}${kw.value}`, '_blank')
-  }
-
-  // 原生交互体验
-  button.onmouseleave = function() {
-    button.setAttribute('class', 'fe-btn fe-btn--normal bg s_btn')
-  }
-  button.onmouseover = function() {
-    button.setAttribute('class', 'fe-btn fe-btn--normal bg s_btn btnhover')
-  }
+  })
 
   // 去除广告
   removeAd()

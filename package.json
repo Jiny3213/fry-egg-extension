@@ -1,0 +1,23 @@
+{
+  "name": "fry-egg-extension",
+  "version": "1.0.0",
+  "description": "Chrome extension tools for search engine \r > 煎蛋插件, 一个常用搜索引擎的扩展工具",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jiny3213/fry-egg-extension.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jiny3213/fry-egg-extension/issues"
+  },
+  "homepage": "https://github.com/Jiny3213/fry-egg-extension#readme",
+  "dependencies": {
+    "@types/chrome": "0.0.122",
+    "@types/jquery": "^3.5.0"
+  }
+}
