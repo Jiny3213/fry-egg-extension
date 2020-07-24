@@ -2,35 +2,37 @@ document.addEventListener('DOMContentLoaded', async function() {
   // 在其他百度页面中不做任何事情
   if(location.pathname !== '/' && location.pathname !== '/s') return
 
+  // 获取所有搜索引擎
+  const engines = await new Promise(resolve => {
+    chrome.storage.sync.get('engines', data => {
+      console.log(data.engines)
+      resolve(data.engines)
+    })
+  })
   let kw = $('#kw')
-  const button = $('<button class="bg s_btn" id="fe-btn"></button>')
+
+  function createBtns() {
+    for (let item of engines) {
+      let button = $('<button class="bg s_btn" id="fe-btn"></button>')
+      $('.bg.s_btn_wr').after(button);
+      button.text(`${item.name} 一下`)
+      button.on('click', () => {
+        window.open(`${item.searchUrl}${kw.val()}`, '_blank')
+      })
+    }
+  }
+  // const button = $('<button class="bg s_btn" id="fe-btn"></button>')
 
   if(location.pathname === '/') {
     // 在百度首页输入任意内容时, 页面样式会发生改变, 此时生成搜索按钮
     kw.on('input', () => {
-      $('.bg.s_btn_wr').after(button);
+      createBtns()
       kw.off('input')
     })
-  } else if(location.pathname === '/s') {
-    $('.bg.s_btn_wr').after(button);
   }
-
-  // 获取当前的搜索引擎
-  let engine = await new Promise((resolve, reject) => {
-    chrome.storage.sync.get('engine', data => {
-      resolve(data.engine)
-    })
-  })
-  // 获取搜索链接
-  let searchUrl = await new Promise((resolve, reject) => {
-    chrome.storage.sync.get('searchUrl', data => {
-      resolve(data.searchUrl)
-    })
-  })
-  button.text(`${engine} 一下`)
-  button.on('click', () => {
-    window.open(`${searchUrl}${kw.val()}`, '_blank')
-  })
+  else if(location.pathname === '/s') {
+    createBtns()
+  }
 
   // 去除广告
   removeAd()

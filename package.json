@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Jiny3213/fry-egg-extension#readme",
   "dependencies": {
     "@types/chrome": "0.0.122",
-    "@types/jquery": "^3.5.0"
+    "@types/jquery": "^3.5.0",
+    "vue": "^2.6.11"
   }
 }

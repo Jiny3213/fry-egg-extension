@@ -3,17 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <title></title>
+  <script src="../utils/vue.js"></script>
   <style>
-    #main {
+    #app {
       width: 300px;
       max-height: 500px;
+    }
+    .engine-btn {
+      margin-right: 10px;
+    }
+    .current-engine {
+      background-color: red;
     }
   </style>
 </head>
 <body>
-  <div id="main">
+  <div id="app">
     <h3>选择搜索引擎</h3>
-    <script src="popup.js"></script>
+    <button v-for="(item, index) in engines" :key="item.name"
+            class="engine-btn"
+            :class="{'current-engine': index === currentEngine}"
+            @click="handleClickEngine(item)">{{item.name}}</button>
   </div>
+  <script src="popup.js"></script>
 </body>
 </html>
