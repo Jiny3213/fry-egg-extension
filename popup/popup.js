@@ -2,8 +2,8 @@
   // 定义搜索引擎
   const searchEngine = [
     {name: 'google', searchUrl: 'https://www.google.com/search?q='},
-    {name: 'bing', searchUrl: 'https://cn.bing.com/search?q='},
-    {name: 'bili', searchUrl: 'https://search.bilibili.com/all?keyword='},
+    // {name: 'bing', searchUrl: 'https://cn.bing.com/search?q='},
+    // {name: 'bili', searchUrl: 'https://search.bilibili.com/all?keyword='},
     {name: 'github', searchUrl: 'https://github.com/search?q='}
   ]
   // 获取当前引擎

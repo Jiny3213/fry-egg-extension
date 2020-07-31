@@ -34,8 +34,21 @@ document.addEventListener('DOMContentLoaded', async function() {
     createBtns()
   }
 
+  // vue路由传参
+  // 屏蔽某些网站的内容
+  const resultArray = $('.result')
+  const as = resultArray.children('h3').children('a')
+  for(let i=0; i<as.length; i++) {
+    if(/脚本之家/.test(as[i].text)) {
+      resultArray[i].remove()
+    }
+  }
+
   // 去除广告
   removeAd()
+
+  // 注入js, 改变ajax行为
+  injectCustomJs()
 });
 
 // 去除第二页开始的底部广告
@@ -50,8 +63,23 @@ function removeAd() {
 
 // xhr结束消息
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  console.log(request)
   if(request.cmd === 'xhrCompleted') {
     removeAd()
   }
   sendResponse()
 });
+
+// 注入js
+function injectCustomJs(jsPath) {
+  jsPath = jsPath || 'js/inject.js';
+  var temp = document.createElement('script');
+  temp.setAttribute('type', 'text/javascript');
+  // 获得的地址类似：chrome-extension://ihcokhadfjfchaeagdoclpnjdiokfakg/js/inject.js
+  temp.src = chrome.extension.getURL(jsPath);
+  temp.onload = function() {
+    this.parentNode.removeChild(this);
+  };
+  console.log(document)
+  document.body.appendChild(temp);
+}

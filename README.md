@@ -17,3 +17,6 @@ Chrome extension tools for search engine
 - 去除google广告iframe
 
 ### bug
+
+### todo:
+- 增加百度搜索屏蔽指定来源网站功能, 如https://www.oschina.net/

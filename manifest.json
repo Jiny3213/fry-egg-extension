@@ -17,7 +17,7 @@
   "content_scripts": [
     {
       "matches": ["https://www.baidu.com/*", "http://www.baidu.com/*"],
-      "js": ["utils/jquery-3.5.1.slim.min.js", "js/baidu.js"],
+      "js": ["utils/jquery-3.5.1.slim.min.js", "js/baidu/baidu.js"],
       "css": ["css/baidu.css"],
       "run_at": "document_start"
     },
@@ -30,6 +30,11 @@
       "matches": ["https://www.google.com/*", "http://www.google.com/*"],
       "js": ["js/google.js"],
       "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.youtube.com/*", "http://www.youtube.com/*"],
+      "js": ["js/google.js"],
+      "run_at": "document_start"
     }
   ],
   "background": {
@@ -37,6 +42,8 @@
     "persistent": true
   },
   "permissions": [
+    "tabs",
+    "debugger",
     "storage",
     "activeTab",
     "webRequest",
