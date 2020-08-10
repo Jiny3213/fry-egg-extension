@@ -1,31 +1,57 @@
+// Storage Area Explorer 扩展可以查看chrome.storage 中的数据
 (async function() {
   // 定义搜索引擎
-  const searchEngine = [
-    {name: 'google', searchUrl: 'https://www.google.com/search?q='},
-    // {name: 'bing', searchUrl: 'https://cn.bing.com/search?q='},
-    // {name: 'bili', searchUrl: 'https://search.bilibili.com/all?keyword='},
-    {name: 'github', searchUrl: 'https://github.com/search?q='}
+  const searchEngines = [
+    {name: 'google', searchUrl: 'https://www.google.com/search?q=', active: true},
+    {name: 'bing', searchUrl: 'https://cn.bing.com/search?q=', active: true},
+    {name: 'bili', searchUrl: 'https://search.bilibili.com/all?keyword=', active: true},
+    {name: 'github', searchUrl: 'https://github.com/search?q=', active: true}
   ]
   // 获取当前引擎
-  const currentEngine = await new Promise(resolve => {
-      chrome.storage.sync.get('engine', data => {
-        console.log(data.engine)
-        resolve(data.engine)
+  const engines = await new Promise(resolve => {
+      chrome.storage.sync.get('engines', data => {
+        resolve(data.engines)
       })
     })
-  const engineIndex = searchEngine.findIndex(item => item.name === currentEngine)
+
+  // 判断是否沿用旧有的数据(上面的engines会更新)
+  let shouldUpdate = false
+  if(searchEngines.length !== engines.length) {
+    shouldUpdate = true
+  } else {
+    for(let i=0; i<searchEngines; i++) {
+      if(searchEngines[i].name !== engines[i].name) {
+        shouldUpdate = true
+        break
+      }
+    }
+  }
+
+  // 向content发送消息
+  function sendMessageToContentScript(message, callback) {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, message, function(response) {
+        if(callback) callback(response);
+      });
+    });
+  }
+
+
   new Vue({
     el: '#app',
     data: {
-      currentEngine: engineIndex,
-      engines: searchEngine
+      engines: shouldUpdate ? searchEngines : engines
     },
     methods: {
-      handleClickEngine(engine) {
-        chrome.storage.sync.set({engine: engine.name, searchUrl: engine.searchUrl}, () => {
-          this.currentEngine = this.engines.findIndex(item => item.name === engine.name)
-        })
+      handleClickEngine(index) {
+        this.engines[index].active = !this.engines[index].active
         chrome.storage.sync.set({engines: this.engines})
+      },
+      handleChangeBiliStyle() {
+        console.log('biliStyle')
+        sendMessageToContentScript({cmd:'test', value:'你好，我是popup！'}, function(response) {
+          console.log('来自content的回复：'+response);
+        });
       }
     }
   })

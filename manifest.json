@@ -16,29 +16,36 @@
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "content_scripts": [
     {
-      "matches": ["https://www.baidu.com/*", "http://www.baidu.com/*"],
-      "js": ["utils/jquery-3.5.1.slim.min.js", "js/baidu/baidu.js"],
-      "css": ["css/baidu.css"],
-      "run_at": "document_start"
-    },
-    {
       "matches": ["<all_urls>"],
       "css": ["module/kill-common-ad/index.css"],
       "run_at": "document_start"
     },
+
+    {
+      "matches": ["https://www.baidu.com/*", "http://www.baidu.com/*"],
+      "js": ["utils/jquery-3.5.1.slim.min.js", "views/baidu/baidu.js"],
+      "css": ["views/baidu/baidu.css"],
+      "run_at": "document_start"
+    },
     {
       "matches": ["https://www.google.com/*", "http://www.google.com/*"],
-      "js": ["js/google.js"],
+      "js": ["views/google.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.bilibili.com/*", "http://www.bilibili.com/*"],
+      "js": ["views/bilibili/bilibili.js"],
+      "css": ["views/bilibili/bilibili.css"],
       "run_at": "document_start"
     },
     {
       "matches": ["https://www.youtube.com/*", "http://www.youtube.com/*"],
-      "js": ["js/google.js"],
+      "js": ["views/google.js"],
       "run_at": "document_start"
     }
   ],
   "background": {
-    "scripts": ["js/background.js"],
+    "scripts": ["views/background.js"],
     "persistent": true
   },
   "permissions": [

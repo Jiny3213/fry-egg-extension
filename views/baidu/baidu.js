@@ -13,15 +13,16 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   function createBtns() {
     for (let item of engines) {
-      let button = $('<button class="bg s_btn" id="fe-btn"></button>')
-      $('.bg.s_btn_wr').after(button);
-      button.text(`${item.name} 一下`)
-      button.on('click', () => {
-        window.open(`${item.searchUrl}${kw.val()}`, '_blank')
-      })
+      if(item.active) {
+        let button = $('<button class="bg s_btn" id="fe-btn"></button>')
+        $('.bg.s_btn_wr').after(button);
+        button.text(`${item.name} 一下`)
+        button.on('click', () => {
+          window.open(`${item.searchUrl}${kw.val()}`, '_blank')
+        })
+      }
     }
   }
-  // const button = $('<button class="bg s_btn" id="fe-btn"></button>')
 
   if(location.pathname === '/') {
     // 在百度首页输入任意内容时, 页面样式会发生改变, 此时生成搜索按钮
@@ -35,7 +36,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   }
 
   // vue路由传参
-  // 屏蔽某些网站的内容
+  // 屏蔽某些网站的内容(首页)
   const resultArray = $('.result')
   const as = resultArray.children('h3').children('a')
   for(let i=0; i<as.length; i++) {
@@ -75,11 +76,9 @@ function injectCustomJs(jsPath) {
   jsPath = jsPath || 'js/inject.js';
   var temp = document.createElement('script');
   temp.setAttribute('type', 'text/javascript');
-  // 获得的地址类似：chrome-extension://ihcokhadfjfchaeagdoclpnjdiokfakg/js/inject.js
   temp.src = chrome.extension.getURL(jsPath);
   temp.onload = function() {
     this.parentNode.removeChild(this);
   };
-  console.log(document)
   document.body.appendChild(temp);
 }

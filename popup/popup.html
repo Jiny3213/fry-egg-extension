@@ -22,8 +22,10 @@
     <h3>选择搜索引擎</h3>
     <button v-for="(item, index) in engines" :key="item.name"
             class="engine-btn"
-            :class="{'current-engine': index === currentEngine}"
-            @click="handleClickEngine(item)">{{item.name}}</button>
+            :class="{'current-engine': item.active}"
+            @click="handleClickEngine(index)">{{item.name}}</button>
+    <h3>bilibili样式选择</h3>
+    <button @click="handleChangeBiliStyle">靠左</button>
   </div>
   <script src="popup.js"></script>
 </body>
