@@ -16,7 +16,7 @@
 
   // 判断是否沿用旧有的数据(上面的engines会更新)
   let shouldUpdate = false
-  if(searchEngines.length !== engines.length) {
+  if(!engines || searchEngines.length !== engines.length) {
     shouldUpdate = true
   } else {
     for(let i=0; i<searchEngines; i++) {
