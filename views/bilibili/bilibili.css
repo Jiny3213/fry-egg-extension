@@ -1,6 +1,30 @@
-.fe-v-wrap {
-  justify-content: left!important;
-  width: 100%!important;
-  margin-left: 20px!important;
-  padding: 0!important;
+/*播放页元素靠左*/
+.app-float-left {
+  margin: 20px!important;
+}
+
+/*首页*/
+
+/*隐藏横向长条广告*/
+.banner-card,
+/*隐藏推广及其右侧广告*/
+#reportFirst2,
+  /*隐藏直播区*/
+#bili_report_live,
+  /*隐藏漫画区*/
+#bili_report_manga,
+  /*隐藏娱乐区*/
+#bili_report_ent,
+  /*隐藏特别推荐*/
+#bili_report_spe_rec{
+  display: none!important;
+}
+
+/*播放页面*/
+
+/*隐藏右侧广告*/
+#right-bottom-banner,
+/*隐藏推荐的直播*/
+#live_recommand_report{
+  display: none!important;
 }

@@ -25,7 +25,8 @@
             :class="{'current-engine': item.active}"
             @click="handleClickEngine(index)">{{item.name}}</button>
     <h3>bilibili样式选择</h3>
-    <button @click="handleChangeBiliStyle">靠左</button>
+    <button @click="floatLeft">靠左</button>
+    <button @click="removeClass">恢复</button>
   </div>
   <script src="popup.js"></script>
 </body>

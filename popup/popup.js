@@ -10,6 +10,7 @@
   // 获取当前引擎
   const engines = await new Promise(resolve => {
       chrome.storage.sync.get('engines', data => {
+        console.log('数据是', data)
         resolve(data.engines)
       })
     })
@@ -47,9 +48,14 @@
         this.engines[index].active = !this.engines[index].active
         chrome.storage.sync.set({engines: this.engines})
       },
-      handleChangeBiliStyle() {
-        console.log('biliStyle')
-        sendMessageToContentScript({cmd:'test', value:'你好，我是popup！'}, function(response) {
+      // bilibili 播放页 画面靠左
+      floatLeft() {
+        sendMessageToContentScript({cmd:'float-left'}, function(response) {
+          console.log('来自content的回复：'+response);
+        });
+      },
+      removeClass() {
+        sendMessageToContentScript({cmd:'reset-class'}, function(response) {
           console.log('来自content的回复：'+response);
         });
       }

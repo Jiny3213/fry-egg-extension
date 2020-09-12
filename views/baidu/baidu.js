@@ -3,10 +3,21 @@ document.addEventListener('DOMContentLoaded', async function() {
   if(location.pathname !== '/' && location.pathname !== '/s') return
 
   // 获取所有搜索引擎
+  // 在新的设备上取不到
   const engines = await new Promise(resolve => {
     chrome.storage.sync.get('engines', data => {
-      console.log(data.engines)
-      resolve(data.engines)
+      if(data.engines) {
+        resolve(data.engines)
+      }
+      // 用户第一次使用, 给默认的引擎
+      else {
+        resolve([
+          {name: 'google', searchUrl: 'https://www.google.com/search?q=', active: true},
+          {name: 'bing', searchUrl: 'https://cn.bing.com/search?q=', active: true},
+          {name: 'bili', searchUrl: 'https://search.bilibili.com/all?keyword=', active: true},
+          {name: 'github', searchUrl: 'https://github.com/search?q=', active: true}
+        ])
+      }
     })
   })
   let kw = $('#kw')
@@ -49,7 +60,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   removeAd()
 
   // 注入js, 改变ajax行为
-  injectCustomJs()
+  // injectCustomJs()
 });
 
 // 去除第二页开始的底部广告
