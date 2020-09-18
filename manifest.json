@@ -20,7 +20,6 @@
       "css": ["module/kill-common-ad/index.css"],
       "run_at": "document_start"
     },
-
     {
       "matches": ["https://www.baidu.com/*", "http://www.baidu.com/*"],
       "js": ["utils/jquery-3.5.1.slim.min.js", "views/baidu/baidu.js"],
@@ -36,11 +35,6 @@
       "matches": ["https://www.bilibili.com/*", "http://www.bilibili.com/*"],
       "js": ["views/bilibili/bilibili.js"],
       "css": ["views/bilibili/bilibili.css"],
-      "run_at": "document_start"
-    },
-    {
-      "matches": ["https://www.youtube.com/*", "http://www.youtube.com/*"],
-      "js": ["views/google.js"],
       "run_at": "document_start"
     }
   ],
