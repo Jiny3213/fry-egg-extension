@@ -1,5 +1,7 @@
 console.log('fe-google')
 
+// try to remove youtube <a> eventListener
+
 // don't work
 // const _addEventListener = EventTarget.prototype.addEventListener
 // EventTarget.prototype.addEventListener = function(type, listener, useCapture=false) {
@@ -23,16 +25,16 @@ console.log('fe-google')
 
 // 修改a标签的默认行为, 在新标签页打开网页
 window.onclick = e => {
-  // console.log('是否可以取消, ', e.cancelable)
-  // console.log(e)
-  // document.getElementsByTagName('ytd-app')[0].removeEventListener('click', arguments.callee)
-  // document.getElementsByTagName('html')[0].removeEventListener('click', arguments.callee)
-  e.preventDefault()
-  e.stopImmediatePropagation()
-  // e.stopPropagation()
   for(let el of e.path) {
     if(el.tagName === 'A' && el.href) {
-      window.open(el.href, '_blank')
+      // 切页
+      if(el.ariaLabel && el.ariaLabel.match(/^Page/) || el.id === 'pnprev' || el.id === 'pnnext') {
+        return
+      }
+      else {
+        e.preventDefault()
+        window.open(el.href, '_blank')
+      }
       break
     }
   }
