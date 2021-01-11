@@ -42,57 +42,66 @@ console.log('inject')
 //   setup();
 // }
 
-// 拦截方法二, 可以
+// 拦截方法二, 可以获取hxr body 但修改无效
 // https://stackoverflow.com/questions/18310484/modify-http-responses-from-a-chrome-extension
-// var _open = XMLHttpRequest.prototype.open;
-// window.XMLHttpRequest.prototype.open = function (method, URL) {
-//   console.log('opening!')
-//   // 网站设置onreadystatechange时会设置到_中,
-//   var _onreadystatechange = this.onreadystatechange,
-//     // 这里用_this只是为了方便往下一个函数里传递
-//     _this = this;
-//   // console.log(_this.onreadystatechange == _onreadystatechange) // true
-//   _this.onreadystatechange = function () {
-//     // catch only completed 'api/search/universal' requests
-//     // if (_this.readyState === 4 && _this.status === 200 && ~URL.indexOf('api/search/universal')) {
-//     if (_this.readyState === 4 && _this.status === 200) {
-//
-//         try {
-//         //////////////////////////////////////
-//         // THIS IS ACTIONS FOR YOUR REQUEST //
-//         //             EXAMPLE:             //
-//         //////////////////////////////////////
-//         var data = JSON.parse(_this.responseText); // {"fields": ["a","b"]}
-//         console.log('responseText', data)
-//         if (data.fields) {
-//           data.fields.push('c','d');
-//         }
-//
-//         // rewrite responseText
-//         Object.defineProperty(_this, 'responseText', {value: JSON.stringify(data)});
-//         /////////////// END //////////////////
-//       } catch (e) {
-//           console.error(e)
-//       }
-//
-//       console.log('Caught! :)', method, URL, _this.responseText);
-//     }
-//     // call original callback
-//     if (_onreadystatechange) _onreadystatechange.apply(this, arguments);
-//   };
-//
-//   // detect any onreadystatechange changing
-//   Object.defineProperty(this, "onreadystatechange", {
-//     get: function () {
-//       return _onreadystatechange;
-//     },
-//     set: function (value) {
-//       _onreadystatechange = value;
-//     }
-//   });
-//
-//   return _open.apply(_this, arguments);
-// };
+var _open = XMLHttpRequest.prototype.open;
+// 修改原生的open
+window.XMLHttpRequest.prototype.open = function (method, URL) {
+  // 保存用户设置的onreadystatechange, 最后再调用
+  let _onreadystatechange = this.onreadystatechange
+  // 改变用户设置的onreadystatechange, 替换成我们的函数
+  this.onreadystatechange = () => {
+    // catch only completed 'api/search/universal' requests
+    if (this.readyState === 4 && this.status === 200 && ~URL.indexOf('Api/getApi')) {
+    // if (_this.readyState === 4 && _this.status === 200) {
+      try {
+      //////////////////////////////////////
+      // THIS IS ACTIONS FOR YOUR REQUEST //
+      //             EXAMPLE:             //
+      //////////////////////////////////////
+      var data = JSON.parse(this.responseText); // {"fields": ["a","b"]}
+      console.log(data.apiInfo.requestInfo)
+      data.apiInfo.requestInfo[0].paramName = 'asdasdasdasd'
+      // 添加字段
+      data.apiInfo.requestInfo.push({
+        childList: [],
+        default: 0,
+        paramKey: "latituasdasdde",
+        paramLimit: "",
+        paramName: "签到地址纬度asdasdasdasd",
+        paramNotNull: "1",
+        paramNote: "",
+        paramType: "14",
+        paramValue: "",
+        paramValueList: []
+      });
+      console.log(data.apiInfo.requestInfo)
+
+      // 重写 responseText
+      Object.defineProperty(this, 'responseText', {value: JSON.stringify(data)});
+      /////////////// END //////////////////
+      } catch (e) {
+          console.error(e)
+      }
+
+      console.log('Caught! :)', method, URL, this.responseText);
+    }
+    // call original callback
+    if (_onreadystatechange) _onreadystatechange.apply(this, arguments);
+  };
+
+  // detect any onreadystatechange changing
+  Object.defineProperty(this, "onreadystatechange", {
+    get: function () {
+      return _onreadystatechange;
+    },
+    set: function (value) {
+      _onreadystatechange = value;
+    }
+  });
+
+  return _open.apply(this, arguments);
+};
 
   // 第三种方法, console not defined
 // (function(xhr) {

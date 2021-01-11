@@ -36,6 +36,11 @@
       "js": ["views/bilibili/bilibili.js"],
       "css": ["views/bilibili/bilibili.css"],
       "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*.eolinker.com/*", "https://*.eolinker.com/*"],
+      "js": ["views/eolinker/index.js", "utils/jquery-3.5.1.slim.min.js"],
+      "run_at": "document_start"
     }
   ],
   "background": {
@@ -59,5 +64,5 @@
     "page": "options/options.html",
     "chrome_style": true
   },
-  "web_accessible_resources": ["js/inject.js"]
+  "web_accessible_resources": ["views/inject.js", "utils/axios.js", "views/eolinker/inject.js"]
 }

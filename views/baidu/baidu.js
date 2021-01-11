@@ -84,7 +84,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 // 注入js
 function injectCustomJs(jsPath) {
-  jsPath = jsPath || 'js/inject.js';
+  jsPath = jsPath || 'views/inject.js';
   var temp = document.createElement('script');
   temp.setAttribute('type', 'text/javascript');
   temp.src = chrome.extension.getURL(jsPath);
